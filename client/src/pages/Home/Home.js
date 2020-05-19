@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Jumbotron } from "../components/JumboTron";
-import PortCards from "../components/PortCards/portCards";
-import SearchBar from "../components/SearchBar/searchBar";
+import { Jumbotron } from "../../components/JumboTron";
+import PortCards from "../../components/PortCards/portCards";
+import SearchBar from "../../components/SearchBar/searchBar";
 import { Container, Button, Row } from "react-bootstrap";
-import DevDataContext from "../utils/DevDataContext";
-import SetupContext from "../utils/SetupContext";
-import { NavigationBar } from "../components/HomeNav";
+import DevDataContext from "../../utils/DevDataContext";
+import SetupContext from "../../utils/SetupContext";
+import { NavigationBar } from "../../components/HomeNav";
 
 function Home() {
   const { devData } = useContext(DevDataContext);

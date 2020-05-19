@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Developer from "./pages/Developer";
-import DevHome from "./pages/DevHome";
-import NoMatch from "./pages/NoMatch";
-import About from "./pages/About";
-import Home from "./pages/Home";
-import Contact from "./pages/Contact";
+import Developer from "./pages/Developer/Developer";
+import DevHome from "./pages/Github/Github";
+import NoMatch from "./pages/NoMatch/NoMatch";
+import About from "./pages/About/About";
+import Home from "./pages/Home/Home";
+import Contact from "./pages/Contact/Contact";
 import Signin from "./pages/Signin/Signin";
 import API from "./utils/API";
 import DevDataContext from "./utils/DevDataContext";

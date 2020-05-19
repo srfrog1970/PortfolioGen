@@ -1,6 +1,6 @@
 import React from "react";
-import AboutMeComp from "../components/AboutMeComp/AboutMeComp";
-import { NavigationBar } from "../components/HomeNav";
+import AboutMeComp from "../../components/AboutMeComp/AboutMeComp";
+import { NavigationBar } from "../../components/HomeNav";
 
 function About() {
   return (

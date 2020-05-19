@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import { DevJumbotron } from "../components/DevJumboTron";
-import PortCards from "../components/PortCards/portCards";
-import SearchBar from "../components/SearchBar/searchBar";
+import { DevJumbotron } from "../../components/DevJumboTron";
+import PortCards from "../../components/PortCards/portCards";
+import SearchBar from "../../components/SearchBar/searchBar";
 import { Container, Button, Row } from "react-bootstrap";
-import DevDataContext from "../utils/DevDataContext";
-import { NavigationBar } from "../components/DevHomeNav";
-import API from "../utils/API";
+import DevDataContext from "../../utils/DevDataContext";
+import { NavigationBar } from "../../components/DevHomeNav";
+import API from "../../utils/API";
 
-function DevHome() {
+function Github() {
   const { devData, setDevData } = useContext(DevDataContext);
   const { devSetup, setDevSetup } = useState({
     isLoadedFlag: false,
@@ -73,4 +73,4 @@ function DevHome() {
   );
 }
 
-export default DevHome;
+export default Github;
