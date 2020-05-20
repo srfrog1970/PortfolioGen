@@ -5,11 +5,11 @@ const Schema = mongoose.Schema;
 // use mongoose method Schema to create the structure for the collection "Book" (called 'books' in mongo)
 // THe schema defines the columns in the collection (table) and the data type in each column
 const developerSchema = new Schema({
-  developerLoginName: {
+  loginName: {
     type: String,
     required: true,
   },
-  developerGithubID: {
+  password: {
     type: String,
     required: true,
   },

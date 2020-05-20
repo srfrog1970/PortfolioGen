@@ -2,8 +2,8 @@ import React from "react";
 
 // This is the Developer record.  This contains all repos.
 const DeveloperContext = React.createContext({
-  developerLoginName: "",
-  developerGithubID: "",
+  loginName: "",
+  password: "",
   lname: "",
   fname: "",
   email: "",

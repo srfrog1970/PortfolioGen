@@ -48,8 +48,8 @@ module.exports = {
 function updateDeveloper(devData) {
   if (devData) {
     let developerData = {
-      developerLoginName: devData.developerLoginName,
-      developerGithubID: devData.developerGithubID,
+      loginName: devData.loginName,
+      password: devData.password,
       fname: devData.fname,
       lname: devData.lname,
       email: devData.email,

@@ -7,16 +7,14 @@ mongoose.connect("mongodb://localhost/portfolio_db", {
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
-// The function updateDevDB takes in an argument called "developerLoginName".
+// The function updateDevDB takes in an argument called "loginName".
 // This is the users github login id.
-function updateDevDB(developerLoginName) {
+function updateDevDB(loginName) {
   var gitHubData;
 
   // Get the github user and Repositories data.
   axios
-    .get(
-      "https://api.github.com/search/repositories?q=user:" + developerLoginName
-    )
+    .get("https://api.github.com/search/repositories?q=user:" + loginName)
     // Set gitHubData to the returned data.  TODO: I thought this line of code would work?
     // .then((gitHubData) => {})
     .then((data) => {
@@ -24,7 +22,7 @@ function updateDevDB(developerLoginName) {
     })
     // Find the developers github login in our database.
     .then(() => {
-      return db.Developer.findOne({ developerLoginName: developerLoginName });
+      return db.Developer.findOne({ loginName: loginName });
     })
     // Take the devData and gitHubData and call loadDB to synch Databases.
     .then((devData) => {
@@ -42,8 +40,8 @@ function loadDB(devData, gitHubData) {
     //  Here is where we will add new data needed from the github Repositories.
     if (!devData) {
       let devData = {
-        developerLoginName: gitHubData.data.items[0].owner.login,
-        developerGithubID: gitHubData.data.items[0].owner.id,
+        loginName: gitHubData.data.items[0].owner.login,
+        password: gitHubData.data.items[0].owner.id,
         repositories: [],
       };
       db.Developer.insertMany(devData);
@@ -113,7 +111,7 @@ function updateRepo(repo, devID) {
       db.Repositories.insertMany(repoDevData).then((repoArray) => {
         // We also need to add the Repositories id to the developer .
         db.Developer.findOneAndUpdate(
-          { developerGithubID: devID },
+          { password: devID },
           {
             $push: {
               repositories: repoArray.map((element, key) => element._id),

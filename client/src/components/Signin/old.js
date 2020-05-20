@@ -53,6 +53,7 @@ class SigninComp extends Component {
       case "password":
         formErrors.password =
           value.length < 6 ? "minimum 6 characaters required" : "";
+        console.log("Password Error:", formErrors.password);
         break;
       case "githubID":
         formErrors.githubID =

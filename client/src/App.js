@@ -1,26 +1,29 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Developer from "./pages/Developer/Developer";
-import DevHome from "./pages/Github/Github";
+
+// Pages
 import NoMatch from "./pages/NoMatch/NoMatch";
 import About from "./pages/About/About";
 import Home from "./pages/Home/Home";
 import Contact from "./pages/Contact/Contact";
 import Signin from "./pages/Signin/Signin";
+
+// Utilities
 import API from "./utils/API";
+
+// Context Information
 import DevDataContext from "./utils/DevDataContext";
 import SetupContext from "./utils/SetupContext";
 
-// Here is another way to set up imports.  I only did this on the about page to show how. Check out how the About pages exports.  You will need the curly brackets when importing.
+// Components
 import { Layout } from "./components/Layout";
-import { DevNavigationBar } from "./components/DevHomeNav";
 //
 // devData - This is in the format of how we are reading the database.
 const App = () => {
   const [devData, setDevData] = useState({
     repositories: [],
-    developerLoginName: "",
-    developerGithubID: "",
+    loginName: "",
+    password: "",
     fname: "",
     lname: "",
     email: "",
@@ -68,16 +71,10 @@ const App = () => {
               <Switch>
                 <DevDataContext.Provider value={devDataProvider}>
                   <SetupContext.Provider value={setupProvider}>
-                    {setup.initialized ? (
-                      <Route exact path="/" component={Home} />
-                    ) : (
-                      <Route exact path="/" component={Signin} />
-                    )}
+                    <Route exact path="/" component={Home} />
                     <Route exact path="/contact" component={Contact} />
                     <Route exact path="/about" component={About} />
-                    <Route exact path="/Developer" component={Developer} />
-                    <Route exact path="/Signin" component={Signin} />
-                    <Route exact path="/DevHome" component={DevHome} />
+                    <Route exact path="/signin" component={Signin} />
                   </SetupContext.Provider>
                 </DevDataContext.Provider>
                 <Route component={NoMatch} />

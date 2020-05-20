@@ -3,10 +3,16 @@ const mongoose = require("mongoose");
 const axios = require("axios");
 
 module.exports = {
+  signin: function (req, res) {
+    // const loginName = req.params.id;
+    // updateDevDB(loginName);
+    // return true;
+  },
+
   // Synch the databases -Notes are in the function.
   syncDatabase: function (req, res) {
-    const developerLoginName = req.params.id;
-    updateDevDB(developerLoginName);
+    const loginName = req.params.id;
+    updateDevDB(loginName);
     return true;
   },
 };
@@ -17,17 +23,17 @@ module.exports = {
 
 // If a user deletes a repository on github.  Currently, this will make the repository attribute "archive" to true and "active" for false.  TODO: It would be nice if we could have a form that shows all archived items.
 
-function updateDevDB(developerLoginName) {
+function updateDevDB(loginName) {
   var gitHubData;
   var devData;
   // console.log('top of updateDevDB')
   // Get the github user and repository data.
   axios
     .get(
-      "https://api.github.com/users/" + developerLoginName + "/repos?type=all?per_page=2"
+      "https://api.github.com/users/" + loginName + "/repos?type=all?per_page=2"
     )
     // "https://api.github.com/users/frunox/repos?type=all"
-    // "https://api.github.com/search/repositories?q=user:" + developerLoginName
+    // "https://api.github.com/search/repositories?q=user:" + loginName
     // Set gitHubData to the returned data.  TODO: I thought this line of code would work?
     // .then((gitHubData) => {})
     .then((data) => {
@@ -35,17 +41,17 @@ function updateDevDB(developerLoginName) {
     })
     // Find the developers github login in our database.
     .then(() => {
-      return db.Developer.findOne({ developerLoginName: developerLoginName });
+      return db.Developer.findOne({ loginName: loginName });
     })
     // Take the devData and gitHubData and call loadDB to synch Databases.
     .then((devData) => {
       // console.log(gitHubData.data[0])
-      loadDB(developerLoginName, devData, gitHubData.data);
+      loadDB(loginName, devData, gitHubData.data);
     })
     .catch((err) => console.log(err));
 }
 
-function loadDB(developerLoginName, devData, gitHubData) {
+function loadDB(loginName, devData, gitHubData) {
   //  If there is no github data then return (TODO: Ask about sending errors.  This will be needed for initialization)
   if (!gitHubData) {
     return res.json("Github user not found");
@@ -54,18 +60,18 @@ function loadDB(developerLoginName, devData, gitHubData) {
     //  Here is where we will add new data needed from the github repository.
     if (!devData) {
       //NOTE: I had the line " let devData = {..." before initializing devData with a "let" statement. HOWEVER, I only had access to this this variable inside the scope of he function...  I learned this the hard way!
-      let userId = gitHubData.findIndex(e => e.owner.login === developerLoginName)
+      let userId = gitHubData.findIndex((e) => e.owner.login === loginName);
       // console.log('id: ', userId)
       var devData = {
-        developerLoginName: developerLoginName,
-        developerGithubID: gitHubData[userId].owner.id,
+        loginName: loginName,
+        password: gitHubData[userId].owner.id,
         lname: "",
         fname: "",
         email: "",
         active: true,
         repositories: [],
       };
-      // console.log('line 68: ', devData.developerGithubID)
+      // console.log('line 68: ', devData.password)
       db.Developer.insertMany(devData);
     }
     var githubRepoArray = [];
@@ -73,9 +79,9 @@ function loadDB(developerLoginName, devData, gitHubData) {
     // Loop through each github repository item and load all new records.
     gitHubData.forEach((repo) => {
       // console.log('at push: ', repo.id)
-      // console.log('devID:  ', devData.developerGithubID)
+      // console.log('devID:  ', devData.password)
       githubRepoArray.push(repo.id);
-      updateRepo(repo, devData.developerGithubID);
+      updateRepo(repo, devData.password);
     });
 
     archiveRepositories(devData, githubRepoArray);
@@ -136,7 +142,7 @@ function updateRepo(repo, devID) {
       db.Repositories.insertMany(repoDevData).then((repoArray) => {
         // We also need to add the repository id to the developer .
         db.Developer.findOneAndUpdate(
-          { developerGithubID: devID },
+          { password: devID },
           {
             $push: {
               repositories: repoArray.map((element, key) => element._id),

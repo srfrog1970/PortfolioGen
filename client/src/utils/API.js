@@ -30,6 +30,6 @@ export default {
   // Call this function to find the active Developer.  You do not need to pass anything in.  If none are active, it is not setup yet.
 
   getsync: function (githubID) {
-    return axios.post("/util/sync/" + githubID);
+    return axios.post("/routes/util/synch/" + githubID);
   },
 };

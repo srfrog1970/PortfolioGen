@@ -1,41 +1,53 @@
 import React, { useContext, useState } from "react";
-import SigninComp from "../../components/SignIncomp";
-import CreateAccountComp from "../../components/CreateAccountcomp";
-import SetupContext from "../../utils/SetupContext";
+import Signin from "../../components/Signin/signin";
 import "./Signin.css";
-import DevDataContext from "../../utils/DevDataContext";
-import { Redirect } from "react-router-dom";
 import API from "../../utils/API";
 
+const formValidation = (event, [{ formData, setFormData }]) => {
+  event.preventDefault();
+  const { name, value } = event.target;
+
+  switch (name) {
+    case "password":
+      if (value.length < 6) {
+        setFormData({
+          ...formData,
+          passwordError: "minimum 6 characaters required",
+          password: "",
+        });
+      } else {
+        setFormData({
+          ...formData,
+          passwordError: "",
+          password: value,
+        });
+      }
+      break;
+    case "loginID":
+      if (value.length < 6) {
+        setFormData({
+          ...formData,
+          loginError: "minimum 6 characaters required",
+          loginID: "",
+        });
+      } else {
+        setFormData({
+          ...formData,
+          loginError: "",
+          loginID: value,
+        });
+      }
+      break;
+    default:
+      break;
+  }
+};
 function SignIn() {
-  const { devData, setDevData } = useContext(DevDataContext);
-  const { setup, setSetup } = useContext(SetupContext);
-  const [loggedIn, setLoggedIn] = useState({
-    loggedIn: false,
-  });
-
-  const handleInputChange = (e) => {
-    setLoggedIn({ loggedIn: true });
-  };
-
-  if (loggedIn.loggedIn) {
-    return <Redirect to={"/DevHome"} />;
-  }
-  if (setup.initialized) {
-    return (
-      <div>
-        <SigninComp handleInputChange={handleInputChange}></SigninComp>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <CreateAccountComp
-          handleInputChange={handleInputChange}
-        ></CreateAccountComp>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Signin formValidation={formValidation}></Signin>
+    </div>
+  );
 }
 
 export default SignIn;

@@ -10,7 +10,7 @@ mongoose.connect("mongodb://localhost/portfolio_db", {
 console.log("here");
 
 db.Developer.update(
-  { developerLoginName: "srfrog1970" },
+  { loginName: "srfrog1970" },
   {
     $set: {
       fname: "Shawnnnn",
@@ -34,7 +34,7 @@ db.Developer.update(
 });
 
 // devTest = db.Developer.findOne({
-//   developerLoginName: "srfrog1970",
+//   loginName: "srfrog1970",
 // })
 //   .populate("repositories")
 //   .exec((err, dbDeveloper) => {

@@ -3,7 +3,7 @@ const express = require("express");
 // import npm package mongoose, the ODM for mongo database
 const mongoose = require("mongoose");
 // set the /routes folder as default for any route declarations (defaults to index.js)
-const routes = require("./routes");
+const routes = require("./routes/routes");
 // declare variable app to hold express methods
 const app = express();
 // set the port for mongo connection to 3001 in development mode

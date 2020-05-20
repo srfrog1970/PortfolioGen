@@ -4,8 +4,8 @@ import React from "react";
 const DevDataContext = React.createContext({});
 
 // const DevDataContext = React.createContext({
-//   developerLoginName: "",
-//   developerGithubID: "",
+//   loginName: "",
+//   password: "",
 //   lname: "",
 //   fname: "",
 //   email: "",

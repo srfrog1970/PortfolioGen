@@ -14,6 +14,8 @@
     "if-env": "^1.0.4",
     "mongoose": "^5.9.13",
     "nodemon": "^2.0.4",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
     "react-bootstrap": "^1.0.1",
     "react-bootstrap-validation": "^0.1.11",
     "styled-components": "^5.1.0"
