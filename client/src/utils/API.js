@@ -2,7 +2,9 @@ import axios from "axios";
 
 export default {
   //
-
+  getSignIn: function () {
+    return axios.post("/util/signIn");
+  },
   // Send in the github user name
   getActiveDevData: function () {
     return axios.get("/api/devData/activeDevData/");

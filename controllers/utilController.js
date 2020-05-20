@@ -3,10 +3,8 @@ const mongoose = require("mongoose");
 const axios = require("axios");
 
 module.exports = {
-  signin: function (req, res) {
-    // const loginName = req.params.id;
-    // updateDevDB(loginName);
-    // return true;
+  signIn: function (req, res) {
+    console.log("Made it!");
   },
 
   // Synch the databases -Notes are in the function.

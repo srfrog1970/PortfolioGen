@@ -4,11 +4,10 @@ import "./Signin.css";
 import API from "../../utils/API";
 
 const formValidation = (event, [{ formData, setFormData }]) => {
-  event.preventDefault();
   const { name, value } = event.target;
-
   switch (name) {
     case "password":
+      event.preventDefault();
       if (value.length < 6) {
         setFormData({
           ...formData,
@@ -24,6 +23,7 @@ const formValidation = (event, [{ formData, setFormData }]) => {
       }
       break;
     case "loginID":
+      event.preventDefault();
       if (value.length < 6) {
         setFormData({
           ...formData,
@@ -38,6 +38,10 @@ const formValidation = (event, [{ formData, setFormData }]) => {
         });
       }
       break;
+    case "formButton":
+      if (formData) {
+        API.getSignIn(formData);
+      }
     default:
       break;
   }

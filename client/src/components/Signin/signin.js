@@ -12,10 +12,11 @@ function Signin({ formValidation }) {
 
   return (
     <div className="wrapper">
-      {console.log(formData)}
+      {/* {console.log(formData)} */}
       <div className="form-wrapper">
         <h1>Sign In</h1>
         <form
+          name="formButton"
           onSubmit={(event) => {
             formValidation(event, [{ formData, setFormData }]);
           }}
