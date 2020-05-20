@@ -1,10 +1,46 @@
 const db = require("../models");
 const mongoose = require("mongoose");
 const axios = require("axios");
+const bcrypt = require("bcrypt");
 
 module.exports = {
   signIn: function (req, res) {
-    console.log("Made it!");
+    db.Developer.findOne({
+      loginName: req.body.loginName,
+      password: req.body.password,
+    })
+      .populate("repositories")
+      .exec((err, dbDeveloper) => {
+        if (err) {
+          return res.json(err);
+        } else {
+          // return res.json(dbDeveloper);
+          return res.redirect("/Developer");
+        }
+      });
+  },
+
+  createAccount: function (req, res) {
+    try {
+      hashedPassword = bcrypt.hash(req.body.password, 10);
+    } catch (error) {
+      console.log("Error using bcrypt");
+      hashedPassword = "";
+    }
+    req.body.password = hashedPassword;
+    db.Developer.updateOne(
+      { loginName: req.params.id },
+      {
+        $set: req.body,
+      }
+    ).exec((err, dbDeveloper) => {
+      if (err) {
+        return res.json(err);
+      } else {
+        // return res.json(dbDeveloper);
+        return res.redirect("/Developer");
+      }
+    });
   },
 
   // Synch the databases -Notes are in the function.

@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import Signin from "../../components/Signin/signin";
 import "./Signin.css";
 import API from "../../utils/API";
+const bcrypt = require("bcrypt");
 
 const formValidation = (event, [{ formData, setFormData }]) => {
   const { name, value } = event.target;
@@ -40,7 +41,7 @@ const formValidation = (event, [{ formData, setFormData }]) => {
       break;
     case "formButton":
       if (formData) {
-        API.getSignIn(formData);
+        API.getSignIn((formData) => {});
       }
     default:
       break;
