@@ -2,16 +2,24 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const routes = require("./routes/routes");
-const passport = require("passport");
+const passport = require("./config/passport");
+const session = require("express-session");
 const app = express();
 
-app.set("view-engine", "ejs"); //TODO: Not sure if I need this.
+// app.set("view-engine", "ejs"); //TODO: Not sure if I need this.
 const PORT = process.env.PORT || 3001;
 
 // require(".config/passport");
 // Configure body parsing for AJAX requests
 app.use(express.urlencoded({ extended: true })); //TODO: Video had "extended: false"
 app.use(express.json());
+
+// Initialize passport
+app.use(
+  session({ secret: "keyboard cat", resave: true, saveUninitialized: true })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Serve up static assets for React
 if (process.env.NODE_ENV === "production") {

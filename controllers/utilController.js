@@ -1,7 +1,8 @@
 const db = require("../models");
 const mongoose = require("mongoose");
 const axios = require("axios");
-const bcrypt = require("bcrypt");
+// const passport = require("../config/passport");
+// const bcryptjs = require("bcryptjs");
 
 module.exports = {
   signIn: function (req, res) {
@@ -14,20 +15,20 @@ module.exports = {
         if (err) {
           return res.json(err);
         } else {
-          // return res.json(dbDeveloper);
-          return res.redirect("/Developer");
+          return res.json(dbDeveloper);
+          // return res.redirect("/Developer");
         }
       });
   },
 
   createAccount: function (req, res) {
-    try {
-      hashedPassword = bcrypt.hash(req.body.password, 10);
-    } catch (error) {
-      console.log("Error using bcrypt");
-      hashedPassword = "";
-    }
-    req.body.password = hashedPassword;
+    // try {
+    //   hashedPassword = bcryptjs.hash(req.body.password, 10);
+    // } catch (error) {
+    //   console.log("Error using bcryptjs");
+    //   hashedPassword = "";
+    // }
+    // req.body.password = hashedPassword;
     db.Developer.updateOne(
       { loginName: req.params.id },
       {

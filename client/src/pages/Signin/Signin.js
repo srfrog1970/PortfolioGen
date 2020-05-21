@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import Signin from "../../components/Signin/signin";
 import "./Signin.css";
 import API from "../../utils/API";
-const bcrypt = require("bcrypt");
+const bcryptjs = require("bcryptjs");
 
 const formValidation = (event, [{ formData, setFormData }]) => {
   const { name, value } = event.target;
@@ -40,8 +40,15 @@ const formValidation = (event, [{ formData, setFormData }]) => {
       }
       break;
     case "formButton":
+      event.preventDefault();
+      console.log("Form data:", formData);
       if (formData) {
-        API.getSignIn((formData) => {});
+        API.getSignIn({
+          loginName: formData.loginName,
+          password: formData.password,
+        })
+          .then((res) => console.log("Respose", res.data))
+          .catch((err) => console.log("Error:", err));
       }
     default:
       break;

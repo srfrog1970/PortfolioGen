@@ -1,5 +1,6 @@
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
+const bcryptjs = require("bcryptjs");
 
 var db = require("../models");
 
@@ -28,6 +29,15 @@ passport.use(
             message: "Incorrect password.",
           });
         }
+        // try {
+        //   if (bcrypt.compare(password, developerData.password)) {
+        //     return done(null, developerData.email);
+        //   } else {
+        //     return done(null, false, { message: "Password incorrect" });
+        //   }
+        // } catch (e) {
+        //   return done(e);
+        // }
         // If none of the above, return the company object.
         return done(null, dbCompany);
       });

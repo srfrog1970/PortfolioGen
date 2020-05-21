@@ -3,7 +3,20 @@ import axios from "axios";
 export default {
   //
   getSignIn: function () {
+    console.log("API!");
     return axios.post("/util/signIn");
+    // .then((req, res) => {
+    //   console.log(res);
+    //   console.log(req);
+    //   if (res.data) {
+    //     console.log("sucess");
+    //   } else {
+    //     console.log("error");
+    //   }
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    // });
   },
   // Send in the github user name
   getActiveDevData: function () {
